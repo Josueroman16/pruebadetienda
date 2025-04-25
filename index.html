@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ElectroHogar</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #111;
+    }
+    header {
+      background-color: #000;
+      color: #ffd700;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: #ffd700;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .seccion {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid #ccc;
+    }
+    .producto {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      max-width: 300px;
+    }
+    .producto img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    .btn-comprar, .btn-vaciar {
+      background-color: #ffd700;
+      color: #000;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+    .btn-comprar:hover, .btn-vaciar:hover {
+      background-color: #e6c200;
+    }
+    #lista-carrito {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ElectroHogar</h1>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#cocina">Cocina</a>
+      <a href="#refrigeracion">Refrigeración</a>
+      <a href="#lavado">Lavado</a>
+      <a href="#pequenos">Pequeños</a>
+      <a href="#ofertas">Ofertas</a>
+      <a href="#carrito">🛒 Carrito</a>
+    </nav>
+  </header>
+
+  <section id="inicio" class="seccion">
+    <h2>Bienvenido a ElectroHogar</h2>
+    <p>Encuentra los mejores electrodomésticos para tu hogar con calidad premium.</p>
+  </section>
+
+  <section id="cocina" class="seccion">
+    <h2>Electrodomésticos de Cocina</h2>
+    <div class="producto">
+      <img src="https://m.media-amazon.com/images/I/71UVu+uwHFL._AC_SL1500_.jpg" alt="Horno Eléctrico Premium">
+      <h3>Horno Eléctrico Premium</h3>
+      <p>Alta eficiencia, diseño elegante.</p>
+      <button class="btn-comprar" onclick="agregarAlCarrito('Horno Eléctrico Premium')">Comprar</button>
+    </div>
+  </section>
+
+  <section id="refrigeracion" class="seccion">
+    <h2>Refrigeración</h2>
+    <div class="producto">
+      <img src="https://m.media-amazon.com/images/I/71vlrDD7xiL._AC_SL1500_.jpg" alt="Refrigerador Doble Puerta">
+      <h3>Refrigerador Doble Puerta</h3>
+      <p>Gran capacidad y estilo sofisticado.</p>
+      <button class="btn-comprar" onclick="agregarAlCarrito('Refrigerador Doble Puerta')">Comprar</button>
+    </div>
+  </section>
+
+  <section id="lavado" class="seccion">
+    <h2>Lavado</h2>
+    <div class="producto">
+      <img src="https://m.media-amazon.com/images/I/61ABdZZHgDL._AC_SL1500_.jpg" alt="Lavadora Inteligente">
+      <h3>Lavadora Inteligente</h3>
+      <p>Conectividad WiFi y ahorro de energía.</p>
+      <button class="btn-comprar" onclick="agregarAlCarrito('Lavadora Inteligente')">Comprar</button>
+    </div>
+  </section>
+
+  <section id="pequenos" class="seccion">
+    <h2>Pequeños Electrodomésticos</h2>
+    <div class="producto">
+      <img src="https://m.media-amazon.com/images/I/71CKyGJZkEL._AC_SL1500_.jpg" alt="Cafetera de Lujo">
+      <h3>Cafetera de Lujo</h3>
+      <p>Café perfecto con un solo botón.</p>
+      <button class="btn-comprar" onclick="agregarAlCarrito('Cafetera de Lujo')">Comprar</button>
+    </div>
+  </section>
+
+  <section id="ofertas" class="seccion">
+    <h2>Ofertas Especiales</h2>
+    <p>¡Aprovecha nuestras promociones exclusivas por tiempo limitado!</p>
+  </section>
+
+  <section id="carrito" class="seccion">
+    <h2>Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
+  </section>
+
+  <script>
+    function agregarAlCarrito(producto) {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      carrito.push(producto);
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      mostrarCarrito();
+    }
+
+    function mostrarCarrito() {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      let lista = document.getElementById('lista-carrito');
+      lista.innerHTML = '';
+
+      if (carrito.length === 0) {
+        lista.innerHTML = '<li>Tu carrito está vacío.</li>';
+      } else {
+        carrito.forEach((producto, index) => {
+          let item = document.createElement('li');
+          item.textContent = producto;
+          lista.appendChild(item);
+        });
+      }
+    }
+
+    function vaciarCarrito() {
+      localStorage.removeItem('carrito');
+      mostrarCarrito();
+    }
+
+    window.onload = mostrarCarrito;
+  </script>
+
+</body>
+</html>
